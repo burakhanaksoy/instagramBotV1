@@ -44,8 +44,8 @@ public class Bot {
         Thread.sleep(2000);
 
         WebElement scrollFollowers = driver.findElement(By.className("isgrP"));
-        int i =1;
-        while(true) {
+
+        for(int i =0; i<FOLLOWER_COUNT ; i++) {
 
             js.executeScript("arguments[0].scrollBy(0,arguments[0].scrollHeight*(0.39))", scrollFollowers);
             String followerXPath = String.format("//div[contains(@class,\"isgrP\")]//following::span[contains(@class,\"Jv7Aj\")][%d]",i);
@@ -53,9 +53,6 @@ public class Bot {
             String follower = driver.findElement(By.xpath(followerXPath)).getText();
             System.out.println(follower);
             followerList.add(follower);
-            if(i>=FOLLOWER_COUNT)
-                break;
-            i++;
         }
         //Close follower tab
         driver.findElement(By.xpath("//*[@class=\"WaOAr\"]//button")).click();
@@ -64,17 +61,13 @@ public class Bot {
         driver.findElement(By.xpath(FOLLOWING_XPATH)).click();
         WebElement scrollFollowing = driver.findElement(By.className("isgrP"));
         Thread.sleep(2000);
-        int b =1;
-        while(true){
+        for(int i =1; i<FOLLOWING_COUNT; i++){
             js.executeScript("arguments[0].scrollBy(0,arguments[0].scrollHeight*(0.39))", scrollFollowing);
-            String followingXPath = String.format("//div[contains(@class,\"isgrP\")]//following::span[contains(@class,\"Jv7Aj\")][%d]",b);
+            String followingXPath = String.format("//div[contains(@class,\"isgrP\")]//following::span[contains(@class,\"Jv7Aj\")][%d]",i);
             Thread.sleep(300);
             String following = driver.findElement(By.xpath(followingXPath)).getText();
             System.out.println(following);
             followingList.add(following);
-            if(b>=FOLLOWING_COUNT)
-                break;
-            b++;
         }
 
         //Create sets for removing common elements
